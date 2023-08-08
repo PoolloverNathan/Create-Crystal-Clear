@@ -5,11 +5,11 @@ import com.cyvack.create_crystal_clear.blocks.compat.AlloyedCompatBlocks;
 import com.cyvack.create_crystal_clear.blocks.glass_casings.GlassCasing;
 import com.cyvack.create_crystal_clear.tile_entities.ModtileEntities;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-import com.simibubi.create.content.contraptions.relays.encased.AbstractEncasedShaftBlock;
-import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
-import com.simibubi.create.content.schematics.ItemRequirement;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.content.kinetics.base.AbstractEncasedShaftBlock;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.content.schematics.requirement.ItemRequirement;
+import com.simibubi.create.foundation.block.IBE;
 import com.tterrag.registrate.util.entry.BlockEntry;
 
 import net.fabricmc.api.EnvType;
@@ -33,7 +33,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
 public class GlassEncasedShaftBlock extends AbstractEncasedShaftBlock
-		implements ITE<KineticTileEntity>, ISpecialBlockItemRequirement {
+		implements IBE<KineticBlockEntity>, ISpecialBlockItemRequirement {
 
 	private BlockEntry<com.cyvack.create_crystal_clear.blocks.glass_casings.GlassCasing> GlassCasing;
 
@@ -84,7 +84,7 @@ public class GlassEncasedShaftBlock extends AbstractEncasedShaftBlock
 			return InteractionResult.SUCCESS;
 		context.getLevel()
 				.levelEvent(2001, context.getClickedPos(), Block.getId(state));
-		KineticTileEntity.switchToBlockState(context.getLevel(), context.getClickedPos(),
+		KineticBlockEntity.switchToBlockState(context.getLevel(), context.getClickedPos(),
 				AllBlocks.SHAFT.getDefaultState()
 						.setValue(AXIS, state.getValue(AXIS)));
 		return InteractionResult.SUCCESS;
@@ -105,13 +105,13 @@ public class GlassEncasedShaftBlock extends AbstractEncasedShaftBlock
 	}
 
 	@Override
-	public Class<KineticTileEntity> getTileEntityClass() {
-		return KineticTileEntity.class;
+	public Class<KineticBlockEntity> getBlockEntityClass() {
+		return KineticBlockEntity.class;
 	}
 
 	@Override
-	public BlockEntityType<? extends KineticTileEntity> getTileEntityType() {
-		return ModtileEntities.GLASS_ENCASED_SHAFT.get();
+	public BlockEntityType<? extends KineticBlockEntity> getBlockEntityType() {
+		return (BlockEntityType<? extends KineticBlockEntity>) ModtileEntities.GLASS_ENCASED_SHAFT.get();
 	}
 
 	// @Override

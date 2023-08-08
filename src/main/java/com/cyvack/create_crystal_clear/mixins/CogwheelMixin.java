@@ -1,7 +1,8 @@
 package com.cyvack.create_crystal_clear.mixins;
 
-import static com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock.AXIS;
-
+import com.simibubi.create.content.kinetics.base.IRotate;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -10,9 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.cyvack.create_crystal_clear.blocks.ModBlocks;
 import com.cyvack.create_crystal_clear.blocks.glass_encased_cogwheel.GlassEncasedCogwheel;
-import com.simibubi.create.content.contraptions.base.IRotate;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
 import com.simibubi.create.foundation.utility.Iterate;
 
 import net.minecraft.core.BlockPos;
@@ -24,6 +22,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+
+import static com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock.AXIS;
 
 @Mixin(CogWheelBlock.class)
 public class CogwheelMixin {
@@ -72,7 +72,7 @@ public class CogwheelMixin {
 								: GlassEncasedCogwheel.BOTTOM_SHAFT);
 			}
 
-			KineticTileEntity.switchToBlockState(world, pos, encasedState);
+			KineticBlockEntity.switchToBlockState(world, pos, encasedState);
 			cir.setReturnValue(InteractionResult.SUCCESS);
 		}
 	}

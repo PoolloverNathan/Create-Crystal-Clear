@@ -5,6 +5,11 @@ import static com.simibubi.create.foundation.data.CreateRegistrate.connectedText
 
 import java.util.function.Supplier;
 
+import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
+import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
+import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogCTBehaviour;
+import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
 import org.jetbrains.annotations.NotNull;
 
 import com.cyvack.create_crystal_clear.Create_Crystal_Clear;
@@ -16,11 +21,6 @@ import com.cyvack.create_crystal_clear.blocks.glass_encased_shaft.GlassEncasedSh
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
-import com.simibubi.create.content.contraptions.relays.encased.EncasedCTBehaviour;
-import com.simibubi.create.content.contraptions.relays.encased.EncasedCogCTBehaviour;
-import com.simibubi.create.content.contraptions.relays.encased.EncasedShaftBlock;
-import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.ConnectedTextureBehaviour;
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -241,7 +241,7 @@ public class BlockBuilders {
 	}
 
 	private static <B extends RotatedPillarKineticBlock, P> BlockBuilder<B, P> glassencasedBase(BlockBuilder<B, P> b,
-			Supplier<ItemLike> drop) {
+																								Supplier<ItemLike> drop) {
 		return b.properties(BlockBehaviour.Properties::noOcclusion)
 				.transform(BlockStressDefaults.setNoImpact())
 				.loot((p, lb) -> p.dropOther(lb, drop.get()));

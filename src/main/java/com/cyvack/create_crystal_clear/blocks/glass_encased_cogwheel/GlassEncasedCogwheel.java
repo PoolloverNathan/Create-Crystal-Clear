@@ -4,18 +4,18 @@ import com.cyvack.create_crystal_clear.blocks.ModBlocks;
 import com.cyvack.create_crystal_clear.blocks.glass_casings.GlassCasing;
 import com.cyvack.create_crystal_clear.tile_entities.ModtileEntities;
 import com.simibubi.create.AllBlocks;
-import com.simibubi.create.content.contraptions.base.IRotate;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
-import com.simibubi.create.content.contraptions.base.RotatedPillarKineticBlock;
-import com.simibubi.create.content.contraptions.components.structureMovement.ITransformableBlock;
-import com.simibubi.create.content.contraptions.components.structureMovement.StructureTransform;
-import com.simibubi.create.content.contraptions.relays.elementary.CogWheelBlock;
-import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;
-import com.simibubi.create.content.contraptions.relays.elementary.SimpleKineticTileEntity;
-import com.simibubi.create.content.contraptions.relays.encased.EncasedCogwheelBlock;
-import com.simibubi.create.content.schematics.ISpecialBlockItemRequirement;
-import com.simibubi.create.content.schematics.ItemRequirement;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.content.contraptions.ITransformableBlock;
+import com.simibubi.create.content.contraptions.StructureTransform;
+import com.simibubi.create.content.kinetics.base.IRotate;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
+import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
+import com.simibubi.create.content.kinetics.simpleRelays.ICogWheel;
+import com.simibubi.create.content.kinetics.simpleRelays.SimpleKineticBlockEntity;
+import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
+import com.simibubi.create.content.schematics.requirement.ISpecialBlockItemRequirement;
+import com.simibubi.create.content.schematics.requirement.ItemRequirement;
+import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.utility.VoxelShaper;
 import com.tterrag.registrate.util.entry.BlockEntry;
 
@@ -44,7 +44,9 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 
-public class GlassEncasedCogwheel extends RotatedPillarKineticBlock implements ICogWheel, ITE<SimpleKineticTileEntity>, ISpecialBlockItemRequirement, ITransformableBlock {
+import static com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock.AXIS;
+
+public class GlassEncasedCogwheel extends RotatedPillarKineticBlock implements ICogWheel, IBE<SimpleKineticBlockEntity>, ISpecialBlockItemRequirement, ITransformableBlock {
 	public static final BooleanProperty TOP_SHAFT = BooleanProperty.create("top_shaft");
 	public static final BooleanProperty BOTTOM_SHAFT = BooleanProperty.create("bottom_shaft");
 
@@ -129,7 +131,7 @@ public class GlassEncasedCogwheel extends RotatedPillarKineticBlock implements I
 			return InteractionResult.SUCCESS;
 
 		BlockPos pos = context.getClickedPos();
-		KineticTileEntity.switchToBlockState(level, pos, state.cycle(context.getClickedFace()
+		KineticBlockEntity.switchToBlockState(level, pos, state.cycle(context.getClickedFace()
 				.getAxisDirection() == Direction.AxisDirection.POSITIVE ? TOP_SHAFT : BOTTOM_SHAFT));
 		playRotateSound(level, pos);
 		return InteractionResult.SUCCESS;
@@ -151,7 +153,7 @@ public class GlassEncasedCogwheel extends RotatedPillarKineticBlock implements I
 			return InteractionResult.SUCCESS;
 		context.getLevel()
 				.levelEvent(2001, context.getClickedPos(), Block.getId(state));
-		KineticTileEntity.switchToBlockState(context.getLevel(), context.getClickedPos(),
+		KineticBlockEntity.switchToBlockState(context.getLevel(), context.getClickedPos(),
 				(isLarge ? AllBlocks.LARGE_COGWHEEL : AllBlocks.COGWHEEL).getDefaultState()
 						.setValue(AXIS, state.getValue(AXIS)));
 		return InteractionResult.SUCCESS;
@@ -277,13 +279,13 @@ public class GlassEncasedCogwheel extends RotatedPillarKineticBlock implements I
 	}
 
 	@Override
-	public Class<SimpleKineticTileEntity> getTileEntityClass() {
-		return SimpleKineticTileEntity.class;
+	public Class<SimpleKineticBlockEntity> getBlockEntityClass() {
+		return SimpleKineticBlockEntity.class;
 	}
 
 	@Override
-	public BlockEntityType<? extends SimpleKineticTileEntity> getTileEntityType() {
-		return isLarge ? ModtileEntities.GLASS_ENCASED_LARGE_COG.get() : ModtileEntities.GLASS_ENCASED_COG.get();
+	public BlockEntityType<? extends SimpleKineticBlockEntity> getBlockEntityType() {
+		return (BlockEntityType<? extends SimpleKineticBlockEntity>) (isLarge ? ModtileEntities.GLASS_ENCASED_LARGE_COG.get() : ModtileEntities.GLASS_ENCASED_COG.get());
 	}
 
 	@SuppressWarnings("deprecation")
