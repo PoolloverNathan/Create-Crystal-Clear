@@ -42,7 +42,7 @@ public class ShaftMixin {
 				add(ModBlocks.TRAIN_CLEAR_GLASS_ENCASED_SHAFT.get());
 				if (Create_Crystal_Clear.isAlloyedLoaded) {
 					add(AlloyedCompatBlocks.STEEL_GLASS_ENCASED_SHAFT.get());
-				}
+				};
 			}
 		};
 
